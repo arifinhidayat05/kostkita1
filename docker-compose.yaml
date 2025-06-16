@@ -1,0 +1,11 @@
+networks:
+  default:
+    name: vps-net
+    external: true
+
+services:
+  web_koskita:
+    container_name: web_koskita
+    image: tugaswp3/web_koskita
+    restart: always
+    
