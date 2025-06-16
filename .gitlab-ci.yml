@@ -1,0 +1,21 @@
+stages:
+  - build
+
+build:
+  stage: build
+  tags:
+    - vps_app_testing
+  variables:
+    DOCKER_HOST: unix:///var/run/docker.sock
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_DRIVER: overlay2
+  script:
+    - set +e
+    - docker compose down
+    - docker image rm tugaswp3/web_koskita
+    - set -e
+    - docker build -t tugaswp3/web_koskita --build-arg APP_NAME=${APP_NAME} --build-arg DB_USERNAME=${DB_USERNAME} --build-arg DB_PASSWORD=${DB_PASSWORD} --build-arg DB_DATABASE=${DB_DATABASE} .
+    - docker compose up -d
+  only:
+    - main
+
